@@ -1,0 +1,138 @@
+﻿@model adodotnet.Models.StudentDB
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+    <link rel="stylesheet" href="/resources/demos/style.css">
+    <link href="~/Content/bootstrap.css" rel="stylesheet" />
+    <link href="~/Content/bootstrap-theme.css" rel="stylesheet" />
+
+    <title>Students</title>
+</head>
+<body style="background-color:whitesmoke;">
+    <div class="container-fluid">
+        <h2>Student Registration</h2>
+        <hr />
+        @using (Html.BeginForm("Insert", "CURD", FormMethod.Post))
+        {
+            @Html.AntiForgeryToken()
+
+            <div class="form-horizontal">
+
+                @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+
+                <div class="row">
+                    <!-- begin col-8 -->
+                    <div class="col-md-4">
+                        <div class="form-group row m-b-15">
+                            @Html.LabelFor(model => model.Name, htmlAttributes: new { @class = "col-md-4 col-sm-4 col-form-label" })
+                            <div class="col-md-6 col-sm-6">
+                                @Html.TextBoxFor(model => model.Name, new {@placeholder = "Enter Name", htmlAttributes = new {@class = "form-control" } })
+                              
+                                @Html.ValidationMessageFor(model => model.Name, "  The Name field is required  ", new { @class = "text-danger" })
+                            </div>
+                        </div>
+                        <div class="form-group row m-b-15">
+                            @Html.LabelFor(model => model.Age, htmlAttributes: new {@class = "col-md-4 col-sm-4 col-form-label" })
+                            <div class="col-md-6 col-sm-6">
+                                @Html.TextBoxFor(model => model.Age, new { @placeholder = "Enter Age",htmlAttributes = new { @class = "form-control" } })
+                                @Html.ValidationMessageFor(model => model.Age, "", new { @class = "text-danger" })
+                            </div>
+                        </div>
+                        <div class="form-group row m-b-15">
+
+                            @Html.LabelFor(model => model.BirthDate, htmlAttributes: new { @class = "col-md-4 col-sm-4 col-form-label" })
+
+
+                            <div class="col-md-6 col-sm-6">
+                                @Html.TextBoxFor(model => model.BirthDate, new {@placeholder = "Enter BirthDate",htmlAttributes = new { @class = "form-control" } })
+                                @Html.ValidationMessageFor(model => model.BirthDate, "", new { @class = "text-danger" })
+                            </div>
+                        </div>
+
+                        <div class="form-group row m-b-15">
+                            @Html.LabelFor(model => model.Subject, htmlAttributes: new {  @class = "col-md-4 col-sm-4 col-form-label" })
+                            <div class="col-md-6 col-sm-6">
+                                @Html.DropDownListFor(m => m.Subject, new List<SelectListItem>
+                { new SelectListItem{Text="C#", Value="C#"},
+                  new SelectListItem{Text="Java", Value="Java"},
+                           new SelectListItem{Text="Python", Value="Python"},
+                           new SelectListItem{Text="JavaScript", Value="JavaScript"},
+                            new SelectListItem{Text="Ruby", Value="Ruby"},
+                            new SelectListItem{Text="DBMS", Value="DBMS"}}, " Please Select Subject ", new { @class = "form - control" })
+                                @Html.ValidationMessageFor(model => model.Subject, "", new { @class = "text-danger" })
+                            </div>
+                        </div>
+
+                        <div class="form-group" align="center">
+                            <div class="col-md-12">
+                                <input type="submit" value="Save" class="btn btn-primary active" id="btnsave" />
+                                <div><h3>@ViewBag.Message</h3></div>
+                            </div>
+                        </div>
+                    </div>
+                    </div>
+                </div>
+                    }
+
+               
+          </div>
+
+                <script src="~/Scripts/jquery-3.3.1.js"></script>
+                <script src="~/Scripts/jquery.validate.js"></script>
+                <script src="~/Scripts/jquery.validate.unobtrusive.js"></script>
+
+                <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
+                <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+                <script>
+            $(function () {
+                $("#BirthDate").datepicker({
+                    changeMonth: true,
+                    changeYear: true,
+                    dateFormat: 'dd-mm-yy'
+
+                });
+            });
+
+                     $(function () {
+        //Your validation button or event
+        $("#btnsave").click(function () {
+            //Check if your textbox is empty
+            if (!$("#Name").val()) {
+                alert("Please enter Name!");
+                $("#Name").focus();
+                return false;
+            }
+            //Otherwise it isn't empty
+            else if (!$("#Age").val()) {
+                alert("Please enter age!");
+                $("#Age").focus();
+                return false;
+            }
+            else if (!$("#BirthDate").val()) {
+                alert("Please enter birthdate!");
+                $("#BirthDate").focus();
+                return false;
+            }
+
+             else if (!$("#Subject").val()) {
+                alert("Please enter subject!");
+                $("#Subject").focus();
+                return false;
+            }
+
+        });
+    });
+
+
+                </script>
+
+    </body>
+</html>
+
